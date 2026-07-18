@@ -34,6 +34,9 @@ env:
   # Electron v43+ requires GCC 13+ (trixie) as otherwise some macros from the v8 headers are not properly expanded.
   ELECTRON_BUILD_CMD_43_PLUS: npx --no-install prebuild -r electron -t 43.0.0 --include-regex 'better_sqlite3.node$'
 
+permissions:
+  contents: write # Required for prebuild jobs to upload assets to GitHub releases
+
 jobs:
   test:
     strategy:

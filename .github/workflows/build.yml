@@ -87,7 +87,6 @@ jobs:
     name: Publishing to NPM
     runs-on: ubuntu-22.04
     permissions:
-      id-token: write # Required for OIDC trusted publishing
       contents: read
     needs:
       - prebuild
@@ -107,9 +106,9 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org
-      - name: Upgrade npm for OIDC support
-        run: npm install -g npm@latest
-      - run: npm publish --provenance
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   prebuild:
     if: ${{ github.event_name == 'release' }}
